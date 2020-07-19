@@ -1,0 +1,24 @@
+{
+  "name": "deno-registry",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "standard",
+    "seed": "export $(cat .env.local | xargs) && node -r esm test/seed.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.714.0",
+    "ip-range-check": "^0.2.0",
+    "mongodb": "^3.5.9",
+    "next": "9.4.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "standard": "^14.3.4"
+  }
+}

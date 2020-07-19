@@ -1,0 +1,13 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  /* background-color: #e4e1e1; */
+}
+
+span.attrib-count {
+  margin: 0 4px;
+}
+
+.repo-list {
+  /* background-color: #f7f7f7; */
+}
