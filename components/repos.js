@@ -86,7 +86,7 @@ export default function Repos ({ repos }) {
                             <strong className='title is-4'>
                               <a
                                 onClick={() => openReadme(repo)}
-                                // href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}
+                              // href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}
                               >
                                 {repo.reponame}
                               </a>
@@ -98,14 +98,10 @@ export default function Repos ({ repos }) {
                             </Link>
                           </div>
                         </div>
-                        <span className='level-right'>
-                      Updated {timeAgo(
-                            new Date(repo.pushed_at)
-                          )}
-                        </span>
+                        <span className='level-right'>Updated {timeAgo(new Date(repo.pushed_at))}</span>
                       </div>
 
-                      {repo.tags.length > 0 && (
+                      {/* {repo.tags.length > 0 && (
                         <div className='is-pulled-right'>
                           <div className='dropdown is-hoverable is-right'>
                             <div className='dropdown-trigger'>
@@ -156,7 +152,7 @@ export default function Repos ({ repos }) {
                             </div>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
                       {repo.description && (
                         <p>{repo.description}</p>
@@ -186,19 +182,19 @@ export default function Repos ({ repos }) {
                     <a
                       href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}
                     >
-                  Docs
+                      Docs
                     </a>
                 &nbsp;•&nbsp;
                     <a
                       href={repo.html_url}
                     >
-                  Repository
+                      Repository
                     </a>
                     {repo.homepage &&
                       <span>
-                    &nbsp;•&nbsp;
+                        &nbsp;•&nbsp;
                         <a href={repo.homepage}>
-                      Home page
+                          Home page
                         </a>
                       </span>}
                   </div>
@@ -210,7 +206,7 @@ export default function Repos ({ repos }) {
                       </small>
                       {repo.license && (
                         <small>
-                      &nbsp;•&nbsp;
+                          &nbsp;•&nbsp;
                           {repo.license}
                         </small>
                       )}
