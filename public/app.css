@@ -8,6 +8,6 @@ span.attrib-count {
   margin: 0 4px;
 }
 
-.repo-list {
-  /* background-color: #f7f7f7; */
+.repo-list .articles .media-content {
+  overflow: hidden;
 }

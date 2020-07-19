@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import absolutify from '../lib/absolutify'
 import Link from 'next/link'
 import { timeAgo, formatNumber } from '../helpers'
@@ -23,6 +23,16 @@ async function getReadme (name) {
 
 export default function Repos ({ repos }) {
   const [readme, setReadme] = useState()
+
+  useEffect(() => {
+    const classList = document.documentElement.classList
+
+    if (readme) {
+      classList.add('is-clipped')
+    } else {
+      classList.remove('is-clipped')
+    }
+  }, [readme])
 
   const openReadme = async repo => {
     const { fullname } = repo
@@ -63,42 +73,39 @@ export default function Repos ({ repos }) {
   }
 
   return (
-    <div id='articles'>
+    <div className='articles'>
       {repos && (
         repos.length
           ? (
-            repos.map((repo) => (
+            repos.map(repo => (
               <article key={repo._id} className='media'>
                 <figure className='media-left'>
                   <p className='image is-64x64'>
-                    <img src={repo.avatar_url} />
+                    <img src={repo.avatar_url} alt='logo' />
                   </p>
                 </figure>
                 <div className='media-content'>
                   <div className='content'>
                     <div>
                       <div
-                        className='level is-mobile'
                         style={{ marginBottom: '0.5rem' }}
                       >
-                        <div className='level-left'>
-                          <div className='level-item'>
-                            <strong className='title is-4'>
-                              <a
-                                onClick={() => openReadme(repo)}
-                              // href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}
-                              >
-                                {repo.reponame}
-                              </a>
-                            </strong>
-                          </div>
-                          <div className='level-item'>
-                            <Link href='/user/[id]' as={`/user/${repo.username}`}>
-                              <a>@{repo.username}</a>
-                            </Link>
-                          </div>
-                        </div>
-                        <span className='level-right'>Updated {timeAgo(new Date(repo.pushed_at))}</span>
+                        <small className='is-pulled-right has-text-grey'>
+                          {timeAgo(new Date(repo.pushed_at))}
+                        </small>
+                        <p className='title is-4'>
+                          <a
+                            className='is-unselectable'
+                            onClick={() => openReadme(repo)}
+                          >
+                            {repo.reponame}
+                          </a>
+                        </p>
+                        <p className='subtitle is-6'>
+                          <Link href='/user/[id]' as={`/user/${repo.username}`}>
+                            <a>@{repo.username}</a>
+                          </Link>
+                        </p>
                       </div>
 
                       {/* {repo.tags.length > 0 && (
@@ -158,11 +165,11 @@ export default function Repos ({ repos }) {
                         <p>{repo.description}</p>
                       )}
 
-                      <div className='is-clearfix' />
+                      {/* <div className='is-clearfix' /> */}
 
                       {repo.topics && (
                         <div>
-                          {repo.topics.map((topic) => (
+                          {repo.topics.map(topic => (
                             <span key={topic}>
                               <Link as={`/search?q=${topic}`} href='/search'>
                                 <a className='tag is-light'>
@@ -176,92 +183,63 @@ export default function Repos ({ repos }) {
                     </div>
                   </div>
 
-                  <div className='is-clearfix' />
+                  {/* <div className='is-clearfix' /> */}
 
                   <div className='mt-1'>
-                    <a
-                      href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}
-                    >
-                      Docs
-                    </a>
-                &nbsp;•&nbsp;
-                    <a
-                      href={repo.html_url}
-                    >
-                      Repository
-                    </a>
-                    {repo.homepage &&
+                    <a href={`https://deno.land/x/gh:${repo.username}:${repo.reponame}`}>Docs</a>
+                    &nbsp;•&nbsp;
+                    <a href={repo.html_url}>Repository</a>
+                    {repo.homepage && (
                       <span>
-                        &nbsp;•&nbsp;
-                        <a href={repo.homepage}>
-                          Home page
-                        </a>
-                      </span>}
+                        &nbsp;•&nbsp;<a href={repo.homepage}>Home page</a>
+                      </span>
+                    )}
+                  </div>
+                  <div className='columns'>
+                    <div className='column'>
+                      <small>{repo.lang}</small>
+                      {repo.license && (<small>&nbsp;•&nbsp;{repo.license}</small>)}
+                    </div>
+                    <div className='column'>
+                      <nav className='level is-mobile is-pulled-right'>
+                        <div className='level-right'>
+                          <a className='level-item' href={`${repo.html_url}/stargazers`} title='Stars'>
+                            <span className='icon is-small'>
+                              <i className='fas fa-star' />
+                            </span>
+                            <span className='attrib-count'>
+                              {formatNumber(repo.stargazers_count)}
+                            </span>
+                          </a>
+                          <a className='level-item' href={`${repo.html_url}/issues`} title='Issues'>
+                            <span className='icon is-small'>
+                              <i className='fas fa-exclamation-circle' />
+                            </span>
+                            <span className='attrib-count'>
+                              {formatNumber(repo.open_issues)}
+                            </span>
+                          </a>
+                          <a className='level-item' href={`${repo.html_url}/watchers`} title='Watchers'>
+                            <span className='icon is-small'>
+                              <i className='far fa-eye' />
+                            </span>
+                            <span className='attrib-count'>
+                              {formatNumber(repo.subscribers_count)}
+                            </span>
+                          </a>
+                          <a className='level-item' href={`${repo.html_url}/network/members`} title='Members'>
+                            <span className='icon is-small'>
+                              <i className='fas fa-code-branch' />
+                            </span>
+                            <span className='attrib-count'>
+                              {formatNumber(repo.forks_count)}
+                            </span>
+                          </a>
+                        </div>
+                      </nav>
+                    </div>
                   </div>
 
-                  <nav className='level is-mobile'>
-                    <div className='level-left'>
-                      <small>
-                        {repo.lang}
-                      </small>
-                      {repo.license && (
-                        <small>
-                          &nbsp;•&nbsp;
-                          {repo.license}
-                        </small>
-                      )}
-                    </div>
-                    <div className='level-right'>
-                      <a
-                        className='level-item'
-                        href={`${repo.html_url}/stargazers`}
-                        title='Stars'
-                      >
-                        <span className='icon is-small'>
-                          <i className='fas fa-star' />
-                        </span>
-                        <span className='attrib-count'>
-                          {formatNumber(repo.stargazers_count)}
-                        </span>
-                      </a>
-                      <a
-                        className='level-item'
-                        href={`${repo.html_url}/issues`}
-                        title='Issues'
-                      >
-                        <span className='icon is-small'>
-                          <i className='fas fa-exclamation-circle' />
-                        </span>
-                        <span className='attrib-count'>
-                          {formatNumber(repo.open_issues)}
-                        </span>
-                      </a>
-                      <a
-                        className='level-item'
-                        href={`${repo.html_url}/watchers`}
-                        title='Watchers'
-                      >
-                        <span className='icon is-small'>
-                          <i className='far fa-eye' />
-                        </span>
-                        <span className='attrib-count'>
-                          {formatNumber(repo.subscribers_count)}
-                        </span>
-                      </a>
-                      <a
-                        className='level-item'
-                        href={`${repo.html_url}/network/members`}
-                        title='Members'
-                      >
-                        <span className='icon is-small'>
-                          <i className='fas fa-code-branch' />
-                        </span>
-                        <span className='attrib-count'>
-                          {formatNumber(repo.forks_count)}
-                        </span>
-                      </a>
-                    </div>
-                  </nav>
                   {/* <div className='field has-addons'>
                     <div className='control is-expanded'>
                       <input
