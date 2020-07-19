@@ -25,8 +25,8 @@ export default function Layout ({ title = siteTitle, children }) {
       <footer className='footer'>
         <div className='content has-text-centered'>
           <p>
-            <strong>deno-registry</strong>
-            The source code is licensed <a href='http://opensource.org/licenses/mit-license.php'>MIT</a>.
+            <strong>deno-registry</strong><br />
+            <span>The <a href='https://github.com/davidjamesstone/deno-registry'>source code</a> is licensed <a href='http://opensource.org/licenses/mit-license.php'>MIT</a>.</span>
           </p>
         </div>
       </footer>

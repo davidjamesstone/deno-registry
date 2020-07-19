@@ -1,7 +1,6 @@
 import getMongoDbConnection from '../../mongo'
 import { logErr } from '../../helpers'
-
-const MAX_RESULTS = 25
+import { MAX_RESULTS } from '../../constants'
 
 const sorters = {
   stargazers: { stargazers_count: -1 },
@@ -19,6 +18,7 @@ export default async function repos (req, res) {
   try {
     const query = req.query
     const sort = sorters[query.sort] || sorters.stargazers
+    const skip = query.skip ? +query.skip : 0
 
     if (query.search) {
       const search = query.search
@@ -28,6 +28,7 @@ export default async function repos (req, res) {
         const repos = await coll
           .find({ username: search.slice(1) })
           .sort(sort)
+          .skip(skip)
           .limit(MAX_RESULTS)
           .toArray()
 
@@ -42,6 +43,7 @@ export default async function repos (req, res) {
             ]
           })
           .sort(sort)
+          .skip(skip)
           .limit(MAX_RESULTS)
           .toArray()
 
@@ -52,6 +54,7 @@ export default async function repos (req, res) {
       const repos = await coll
         .find()
         .sort(sort)
+        .skip(skip)
         .limit(MAX_RESULTS)
         .toArray()
 
