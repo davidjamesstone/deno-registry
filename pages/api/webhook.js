@@ -76,7 +76,7 @@ export default async function webhook (req, res) {
       }
     }
 
-    return res.status(200).send('ok')
+    return res.status(200).send(`ok ${req.headers['x-forwarded-for']} ${req.connection.remoteAddress}`)
   } catch (err) {
     logErr(err.message)
     return res.status(500).send('Internal server error')
