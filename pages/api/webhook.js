@@ -1,7 +1,7 @@
 import ipRangeCheck from 'ip-range-check'
 import ping from '../../lib/handlers/ping'
-import create from '../../lib/handlers/create'
-import del from '../../lib/handlers/delete'
+// import create from '../../lib/handlers/create'
+// import del from '../../lib/handlers/delete'
 import meta from '../../lib/handlers/meta'
 import repoEdited from '../../lib/handlers/repo.edited'
 import { log, logErr, hasOwnProperty } from '../../helpers'
@@ -14,14 +14,15 @@ const allowedIPs = [
 
 const handlers = {
   ping,
-  meta,
-  create,
-  delete: del,
-  push: repoEdited,
-  star: repoEdited,
-  repository: {
-    edited: repoEdited
-  }
+  meta
+  // ,
+  // create,
+  // delete: del,
+  // push: repoEdited,
+  // star: repoEdited,
+  // repository: {
+  //   edited: repoEdited
+  // }
 }
 
 function getHandler (type, payload) {
@@ -30,11 +31,15 @@ function getHandler (type, payload) {
 
     if (typeof handler === 'function') {
       return handler
-    } else if (payload.action) {
-      if (hasOwnProperty(handler, payload.action)) {
-        return handler[payload.action]
-      }
+    // } else if (payload.action) {
+    //   if (hasOwnProperty(handler, payload.action)) {
+    //     return handler[payload.action]
+    //   }
+    // } else if (payload.repository) {
+    //   return repoEdited
     }
+  } else if (payload.repository) {
+    return repoEdited
   }
 }
 

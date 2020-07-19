@@ -46,7 +46,7 @@ export default function SearchLayout ({ search = '' }) {
               <Repos repos={repos} />
               {repos && repos.length === MAX_RESULTS && (
                 <p style={{ marginTop: '30px' }}>
-                  <a className='button  is-fullwidth' onClick={onClickMore}>More</a>
+                  <a className='button is-fullwidth' onClick={onClickMore}>More</a>
                 </p>
               )}
             </div>
