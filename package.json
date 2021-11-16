@@ -10,7 +10,7 @@
     "seed": "export $(cat .env.local | xargs) && node -r esm test/seed.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.714.0",
+    "aws-sdk": "^2.814.0",
     "ip-range-check": "^0.2.0",
     "mongodb": "^3.5.9",
     "next": "9.4.4",
